@@ -2,37 +2,53 @@ const Rcn = require("../models/Rcn");
 
 module.exports = {
   async store(req, res) {
-    const { edition, description } = req.body;
-    const rcn = await Rcn.create({ edition, description });
+    try {
+      const { edition, description } = req.body;
+      const rcn = await Rcn.create({ edition, description });
 
-    return res.json(rcn);
+      return res.json(rcn);
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   async index(req, res) {
-    const rcn = await Rcn.findAll();
+    try {
+      const rcn = await Rcn.findAll();
 
-    return res.json(rcn);
+      return res.json(rcn);
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   async update(req, res) {
-    const { edition, description } = req.body;
+    try {
+      const { edition, description } = req.body;
 
-    await Rcn.update(
-      { edition, description },
-      { where: { id: req.params.id } }
-    );
+      await Rcn.update(
+        { edition, description },
+        { where: { id: req.params.id } }
+      );
 
-    return res.send(
-      `RCN ATUALIZADA PARA \n ED.: ${edition} \n DESC.: ${description}`
-    );
+      return res.send(
+        `RCN ATUALIZADA PARA \n ED.: ${edition} \n DESC.: ${description}`
+      );
+    } catch (error) {
+      console.error(error);
+    }
   },
 
   async delete(req, res) {
-    const rcnId = req.params.id;
-    await Rcn.destroy({
-      where: { id: rcnId },
-    });
+    try {
+      const rcnId = req.params.id;
+      await Rcn.destroy({
+        where: { id: rcnId },
+      });
 
-    return res.send(`RCN DO ID: ${rcnId} EXCLUÍDA COM SUCESSO.`);
+      return res.send(`RCN DO ID: ${rcnId} EXCLUÍDA COM SUCESSO.`);
+    } catch (error) {
+      console.error(error);
+    }
   },
 };
