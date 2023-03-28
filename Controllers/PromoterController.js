@@ -21,4 +21,34 @@ module.exports = {
       console.error(error);
     }
   },
+
+  async update(req, res) {
+    try {
+      const { nameSurname, trademarks } = req.body;
+
+      await Promoter.update(
+        { nameSurname, trademarks },
+        { where: { id: req.params.id } }
+      );
+
+      return res.send(
+        `Divulgador atualizado \n Nome: ${nameSurname} \n Selo: ${trademarks}`
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      const promoterId = req.params.id;
+      await Promoter.destroy({
+        where: { id: promoterId },
+      });
+
+      return res.send(`Divulgador id: ${promoterId} excluído com sucesso!`);
+    } catch (error) {
+      console.error(error);
+    }
+  },
 };

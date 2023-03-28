@@ -14,8 +14,10 @@ routes.get("/promoters", PromoterController.index);
 
 //* UPDATE
 routes.put("/rcn/:id", RcnController.update);
+routes.put("/promoter/:id", PromoterController.update);
 
 //* DELETE
 routes.delete("/rcn/:id", RcnController.delete);
+routes.delete("/promoter/:id", PromoterController.delete);
 
 module.exports = routes;
