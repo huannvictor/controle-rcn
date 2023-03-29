@@ -42,6 +42,7 @@ module.exports = {
       return res.json(schoolsList);
     } catch (error) {
       console.error(error);
+      res.send(error.errors);
     }
   },
 };
