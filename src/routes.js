@@ -8,7 +8,7 @@ const routes = express.Router();
 //* CREATE
 routes.post("/rcn", RcnController.store);
 routes.post("/promoter", PromoterController.store);
-routes.post("/newschool", SchoolsController.store);
+routes.post("/newschool/:promoterId", SchoolsController.store);
 
 //* READ
 routes.get("/rcn", RcnController.index);

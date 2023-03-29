@@ -32,6 +32,14 @@ const Schools = sequelize.define("schools", {
       key: "id",
     },
   },
+  region: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  adopter: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
 });
 
 Schools.belongsTo(Promoter, {
