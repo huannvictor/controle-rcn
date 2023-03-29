@@ -36,10 +36,10 @@ const Schools = sequelize.define("schools", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  // adopter: {
-  //   type: DataTypes.BOOLEAN,
-  //   allowNull: false,
-  // },
+  adopter: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+  },
 });
 
 Schools.belongsTo(Promoter, {

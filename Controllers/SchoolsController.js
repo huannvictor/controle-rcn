@@ -31,7 +31,7 @@ module.exports = {
       return res.json(newSchools);
     } catch (error) {
       console.error(error);
-      res.send(error.errors);
+      return res.send(error);
     }
   },
 
@@ -42,7 +42,76 @@ module.exports = {
       return res.json(schoolsList);
     } catch (error) {
       console.error(error);
+      return res.send(error);
+    }
+  },
+
+  async indexByPromoter(req, res) {
+    try {
+      const promoterId = req.params.promoterId;
+      const schoolsList = await Schools.findAll({
+        where: { promoterId: promoterId },
+      });
+
+      return res.json(schoolsList);
+    } catch (error) {
+      console.error(error);
       return res.send(error.errors);
+    }
+  },
+
+  async update(req, res) {
+    try {
+      const schoolId = req.params.id;
+      const { code, schoolName, promoterId, region, adopter } = req.body;
+
+      const promoter = await Promoter.findOne({
+        where: { id: promoterId },
+      });
+
+      await Schools.update(
+        {
+          code,
+          schoolName,
+          promoterName: promoter.nameSurname,
+          promoterId,
+          region,
+          adopter,
+        },
+        { where: { id: schoolId } }
+      );
+
+      return res.send(`Escola ${schoolName} atualizada!`);
+    } catch (error) {
+      console.error(error);
+      return res.send(error);
+    }
+  },
+
+  async delete(req, res) {
+    try {
+      const schoolId = req.params.id;
+
+      await Schools.destroy({
+        where: { id: schoolId },
+      });
+
+      const deletedSchool = await Schools.findOne({
+        where: { id: schoolId },
+      });
+
+      if (deletedSchool !== 0) {
+        return res.status(404).json({
+          error: `Escola com ID ${schoolId} não encontrada!`,
+        });
+      }
+
+      return res.json({
+        message: `Escola com ID ${schoolId} deletada com sucesso!`,
+      });
+    } catch (error) {
+      console.error(error);
+      return res.send(error);
     }
   },
 };
