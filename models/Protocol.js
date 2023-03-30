@@ -1,54 +1,58 @@
 const { Sequelize, DataTypes } = require("sequelize");
 const Promoter = require("./Promoter");
-const Protocol = require("./Protocol");
-
+const Schools = require("./Schools");
+const Rcn = require("./Rcn");
 const { v4: uuidv4 } = require("uuid");
 
 const sequelize = new Sequelize("controle-rcn", "postgres", "1234", {
   dialect: "postgres",
 });
 
-const Schools = sequelize.define("schools", {
+const Protocol = sequelize.define("protocol", {
   id: {
     allowNull: false,
     primaryKey: true,
-    type: Sequelize.UUID,
-    defaultValue: Sequelize.UUIDV4,
+    type: DataTypes.UUID,
+    defaultValue: DataTypes.UUIDV4,
   },
-  code: {
-    type: DataTypes.INTEGER,
+  rcnId: {
+    type: DataTypes.UUID,
     allowNull: false,
+    references: {
+      model: "Rcn",
+      key: "id",
+    },
   },
-  schoolName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  promoterName: {
+  rcnEdition: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   promoterId: {
     type: DataTypes.UUID,
+    allowNull: false,
     references: {
       model: "Promoter",
       key: "id",
     },
   },
-  region: {
+  promoterName: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  adopter: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false,
-  },
 });
 
-Schools.belongsTo(Promoter, {
+Protocol.belongsTo(Rcn, {
+  foreignKey: "rcnId",
+  as: "rcn",
+});
+Protocol.belongsTo(Promoter, {
   foreignKey: "promoterId",
   as: "promoter",
 });
+Protocol.belongsToMany(Schools, {
+  foreignKey: "promoterId",
+  through: "ProtocolSchools",
+  as: "promoter",
+});
 
-Schools.belongsToMany(Protocol, { through: "protocolSchools" });
-
-module.exports = Schools;
+module.exports = Protocol;
