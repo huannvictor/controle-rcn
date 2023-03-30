@@ -8,51 +8,69 @@ const sequelize = new Sequelize("controle-rcn", "postgres", "1234", {
   dialect: "postgres",
 });
 
-const Protocol = sequelize.define("protocol", {
-  id: {
-    allowNull: false,
-    primaryKey: true,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4,
-  },
-  rcnId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: "Rcn",
-      key: "id",
+const Protocol = sequelize.define(
+  "protocol",
+  {
+    id: {
+      allowNull: false,
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4,
     },
-  },
-  rcnEdition: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-  promoterId: {
-    type: DataTypes.UUID,
-    allowNull: false,
-    references: {
-      model: "Promoter",
-      key: "id",
+    rcnId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: "Rcn",
+        key: "id",
+      },
     },
+    rcnEdition: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    promoterId: {
+      type: DataTypes.UUID,
+      allowNull: false,
+      references: {
+        model: "Promoter",
+        key: "id",
+      },
+    },
+    promoterName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    schoolsList: {
+      type: Sequelize.ARRAY(Sequelize.STRING),
+      allowNull: false,
+    },
+    // schoolId: {
+    //   type: DataTypes.UUID,
+    //   allowNull: false,
+    //   references: {
+    //     model: "Schools",
+    //     key: "id",
+    //   },
+    // },
   },
-  promoterName: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  },
-});
+  {
+    tableName: "protocol",
+  }
+);
 
 Protocol.belongsTo(Rcn, {
   foreignKey: "rcnId",
   as: "rcn",
 });
+
 Protocol.belongsTo(Promoter, {
   foreignKey: "promoterId",
   as: "promoter",
 });
-Protocol.belongsToMany(Schools, {
-  foreignKey: "promoterId",
-  through: "ProtocolSchools",
-  as: "promoter",
-});
+
+// Protocol.belongsToMany(Schools, {
+//   through: "protocolSchools",
+// });
 
 module.exports = Protocol;
