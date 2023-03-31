@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && npx node src/index.js",
-    "dev": "npx nodemon src/index.js"
+    "start": "npx node src/index.js",
+    "dev": "npx nodemon src/index.js",
+    "build": "babel src -d dist"
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,9 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.21.0",
+    "@babel/core": "^7.21.4",
+    "@babel/preset-env": "^7.21.4",
     "nodemon": "^2.0.22"
   }
 }
