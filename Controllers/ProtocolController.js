@@ -59,4 +59,29 @@ module.exports = {
       return res.send(error);
     }
   },
+
+  async update(req, res) {
+    try {
+      const protocolId = req.params.id;
+      const { rcnId, promoterId } = req.body;
+
+      const rcn = await Rcn.findOne({ where: { id: rcnId } });
+      const promoter = await Promoter.findOne({ where: { id: promoterId } });
+
+      await Protocol.update(
+        {
+          rcnId,
+          rcnEdition: rcn.edition,
+          promoterId,
+          promoterName: promoter.nameSurname,
+        },
+        { where: { id: protocolId } }
+      );
+
+      return res.send(`Protocolo com ID: ${protocolId} alterado com sucesso!`);
+    } catch (error) {
+      console.error(error);
+      return res.send(error);
+    }
+  },
 };

@@ -23,6 +23,7 @@ routes.get("/protocol", ProtocolController.index);
 routes.put("/rcn/:id", RcnController.update);
 routes.put("/promoter/:id", PromoterController.update);
 routes.put("/school/:id", SchoolsController.update);
+routes.put("/protocol/:id", ProtocolController.update);
 
 //* DELETE
 routes.delete("/rcn/:id", RcnController.delete);
