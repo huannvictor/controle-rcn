@@ -20,11 +20,11 @@ const Schools = sequelize.define("schools", {
     allowNull: false,
   },
   schoolName: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   promoterName: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   promoterId: {
@@ -35,7 +35,7 @@ const Schools = sequelize.define("schools", {
     },
   },
   region: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   adopter: {

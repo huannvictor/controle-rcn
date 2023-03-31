@@ -1,3 +1,5 @@
+const { Op } = require("sequelize");
+
 const Rcn = require("../models/Rcn");
 const Promoter = require("../models/Promoter");
 const Schools = require("../models/Schools");
@@ -10,20 +12,13 @@ module.exports = {
 
       const rcn = await Rcn.findOne({ where: { id: rcnId } });
       const promoter = await Promoter.findOne({ where: { id: promoterId } });
-      // const schoolsList = await Schools.findAll({ where: { id: schoolsIds } });
-
-      const schoolsList = schoolsIds.map(async (schoolId) => {
-        const school = await Schools.findAll({ where: { id: schoolId } });
-        // return {
-        //   code,
-        //   schoolName,
-        //   region,
-        //   adopter,
-        // };
-        console.log(schoolId);
+      const schoolsList = await Schools.findAll({
+        where: {
+          id: {
+            [Op.in]: schoolsIds,
+          },
+        },
       });
-
-      // console.log(schoolsList);
 
       const newProtocol = await Protocol.create({
         rcnId,
@@ -33,7 +28,7 @@ module.exports = {
         schoolsList,
       });
 
-      // console.log(newProtocol);
+      return res.json(newProtocol);
     } catch (error) {
       console.error(error);
       return res.send(error);

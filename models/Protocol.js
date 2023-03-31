@@ -26,7 +26,7 @@ const Protocol = sequelize.define(
       },
     },
     rcnEdition: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     promoterId: {
@@ -38,11 +38,11 @@ const Protocol = sequelize.define(
       },
     },
     promoterName: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     schoolsList: {
-      type: Sequelize.ARRAY(Sequelize.STRING),
+      type: Sequelize.ARRAY(Sequelize.TEXT),
       allowNull: false,
     },
     // schoolId: {

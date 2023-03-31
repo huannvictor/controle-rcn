@@ -15,11 +15,11 @@ const Promoter = sequelize.define(
       defaultValue: Sequelize.UUIDV4,
     },
     nameSurname: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
     trademarks: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false,
     },
   },
