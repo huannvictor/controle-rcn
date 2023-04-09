@@ -6,4 +6,4 @@ const app = express();
 app.use(express.json());
 app.use(routes);
 
-app.listen(4400);
+app.listen(5432);
